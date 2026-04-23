@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/evolving-skill/project-skill.schema.json",
+  "title": "Project skill store",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "updated_at", "skills"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "可选：指向本 schema 的路径或 URL，便于编辑器校验"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "文件格式版本，便于以后迁移字段"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "最近一次写入时间（ISO 8601）"
+    },
+    "skills": {
+      "type": "array",
+      "description": "项目级可复用规则条目",
+      "items": { "$ref": "#/definitions/skill" }
+    }
+  },
+  "definitions": {
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "content",
+        "scope",
+        "trigger",
+        "weight",
+        "confidence",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 8,
+          "description": "稳定标识，用于 update/delete；建议 UUID"
+        },
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "description": "一句话可执行约定"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "description": "作用范围，如 project:repo-name 或 path:packages/api"
+        },
+        "trigger": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 },
+          "description": "用于检索/命中的关键词"
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "description": "命中或强化次数，供排序与衰减"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "置信度，供排序与淘汰"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "evolving", "deprecated"],
+          "description": "生命周期状态"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "可选：创建时间，便于审计"
+        },
+        "last_used_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "可选：上次命中时间，供衰减逻辑"
+        }
+      }
+    }
+  }
+}
