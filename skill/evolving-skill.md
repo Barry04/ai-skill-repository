@@ -229,6 +229,27 @@ confidence ↓
 .project-skill.json
 ```
 
+路径规范（必须）：
+
+* 固定存放在项目根目录：`<repo>/.project-skill.json`
+* 可选模板：`<repo>/.project-skill.example.json`（用于初始化）
+* 不按工具拆分存放（如 `.cursor/`、`~/.claude/` 仅放适配配置）
+
+缺失文件时，Skill 必须具备初始化能力：
+
+1. 若 `.project-skill.json` 存在，直接读取；
+2. 若不存在且有 `.project-skill.example.json`，复制生成；
+3. 若都不存在，自动创建最小结构：
+
+```json
+{
+  "$schema": "./schema/project-skill.schema.json",
+  "version": 1,
+  "updated_at": "1970-01-01T00:00:00Z",
+  "skills": []
+}
+```
+
 特点：
 
 * 项目隔离

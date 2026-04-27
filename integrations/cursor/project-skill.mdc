@@ -5,7 +5,7 @@ alwaysApply: true
 
 # 项目 Skill（.project-skill.json）
 
-> 说明：该文件是 Cursor 兼容层。统一方案下通过安装脚本自动处理，不要求用户手工配置。
+> 这是 Cursor 兼容层示例。统一方案下优先使用 `scripts/install-skill.ps1`，无需手工复制本文件。
 
 本仓库使用根目录的 `.project-skill.json` 存放**可复用的项目约定**（见 `schema/project-skill.schema.json`）。
 
