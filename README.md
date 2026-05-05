@@ -1,8 +1,12 @@
 # evolving-skill
 
+# 目标
+让AI Agent 像老员工一样熟悉项目，快速完成项目任务。
+
 A minimal in-agent skill layer using a single markdown file to store and reuse problem-solving patterns.
 
-让AI Agent 像老员工一样熟悉项目，快速完成项目任务。
+
+一个面向单项目的 Skill 层，用于沉淀重复出现的问题解决经验，并在同一代码环境中复用，从而提升 Agent 的稳定性与效率。
 
 ## What is this?
 
