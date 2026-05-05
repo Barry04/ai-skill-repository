@@ -2,6 +2,8 @@
 
 A minimal in-agent skill layer using a single markdown file to store and reuse problem-solving patterns.
 
+让AI Agent 像老员工一样熟悉项目，快速完成项目任务。
+
 ## What is this?
 
 This project provides a lightweight skill harness for AI agents.
