@@ -1,54 +1,64 @@
-# Agent Skill Harness Protocol
+# Skill Harness Protocol
 
-This protocol defines a minimal in-agent Skill layer. It uses only `skill.md`.
+This defines how an agent uses `skill.md` as an internal skill layer.
 
-## Retrieval
+---
 
-1. Before a task, read `skill.md` if it exists.
-2. Match the user request against each skill's `trigger` values.
-3. Select at most 2 relevant skills.
-4. If no trigger matches, continue without Skill context.
+## 1. Retrieval
 
-## Injection
+- Read all skills from `skill.md`
+- Match user input with `trigger`
+- Select at most 2 relevant skills
 
-Convert selected skills into short prompt context:
+---
 
-```text
+## 2. Injection
+
+Convert matched skills into:
+
 [经验参考]
-- ...
-- ...
-```
+- xxx
 
 Rules:
+- Max 2 skills
+- Each ≤ 2 lines
+- Do not copy verbatim
+- Must integrate into answer
 
-- Inject at most 2 items.
-- Keep each item within 2 lines.
-- Fuse the experience into the current task wording.
-- Do not copy `content` verbatim unless exact wording is required.
+---
 
-## Write Policy
+## 3. Write Policy
 
-Do not write to `skill.md` automatically.
+Only create a new skill when:
 
-Only propose or apply a new skill when:
+- Problem is clearly solved
+- Knowledge is reusable
 
-- The problem was solved.
-- The lesson is reusable across future tasks.
-- The content is not tied to a one-off file, bug, or temporary state.
-- The user explicitly asks to record, update, merge, or delete a skill.
+AND:
 
-## Lifecycle
+- User explicitly asks to save
 
-- Merge similar skills instead of adding duplicates.
-- Keep the total number of skills at 50 or fewer.
-- Prefer one concise skill over several narrow variants.
-- Delete obsolete or misleading skills when the user confirms they are no longer useful.
+---
 
-## Guardrails
+## 4. Format
 
-- No services, APIs, databases, vector stores, or external memory systems.
-- No long-form skills.
-- No scores, embeddings, weights, confidence fields, or complex metadata.
-- No strongly context-dependent content.
-- No secrets, tokens, personal data, or private credentials.
-- `skill.md` is the only Skill storage file.
+## [name]
+trigger: xxx, xxx
+content:
+- xxx
+- xxx
+
+---
+
+## 5. Lifecycle
+
+- Merge similar skills (based on trigger overlap)
+- Keep total skills ≤ 50
+
+---
+
+## 6. Guardrails
+
+- Do NOT auto-write skills continuously
+- Do NOT store long or verbose content
+- Do NOT store context-specific data
