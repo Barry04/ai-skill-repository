@@ -1,0 +1,32 @@
+---
+description: 从 .project-skill.json 加载项目约定并按需遵循
+alwaysApply: true
+---
+
+# 项目 Skill（.project-skill.json）
+
+> 这是 Cursor 兼容层示例。统一方案下优先使用 `scripts/install-skill.ps1`，无需手工复制本文件。
+
+本仓库使用根目录的 `.project-skill.json` 存放**可复用的项目约定**（见 `schema/project-skill.schema.json`）。
+
+## 何时读取
+
+在开始实现或修改代码前，若存在 `.project-skill.json`，请先读取其内容。
+仅允许读取项目根目录 `<repo>/.project-skill.json`，不要在 `.cursor/` 下创建或读取主数据文件。
+
+若根目录不存在 `.project-skill.json`，请先初始化：
+
+1. 若存在 `.project-skill.example.json`，复制为 `.project-skill.json`；
+2. 否则创建最小空文件（字段：`$schema`、`version`、`updated_at`、`skills=[]`）。
+
+## 如何选用条目
+
+1. 忽略 `status` 为 `deprecated` 的条目（除非用户明确要求参考历史约定）。
+2. 对 `status` 为 `evolving` 的条目：可与 `active` 并存，优先采用**置信度更高**且与用户任务**语义更相关**的一条；若仍冲突，向用户简短确认。
+3. 按 `weight * confidence` 降序排列，通常**最多采纳 3 条**与当前任务相关的 `content` 作为行为约束。
+4. 匹配相关性时，可结合用户问题与每条 `trigger` 关键词做简单重叠判断（无需全量注入所有条目）。
+
+## 写入与保密
+
+- 仅在用户明确要求**沉淀/更新/删除**项目约定时，才写回 `.project-skill.json`；写入后更新根级的 `updated_at`（ISO 8601 UTC）。
+- 不在该文件中保存密钥、token、个人数据或一次性调试结论。
