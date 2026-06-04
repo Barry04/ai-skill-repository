@@ -1,0 +1,3 @@
+display_name: Linux Test Executor
+short_description: Upload files, run remote Linux tests, collect logs, and summarize results.
+default_prompt: Use linux-test-executor to upload artifacts to a Linux test host, run the requested validation command or script, collect logs, and return a structured result summary.

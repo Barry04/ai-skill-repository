@@ -1,0 +1,29 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE/editor files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/shelf/
+.vscode/
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Build/dist artifacts
+dist/
+build/
+out/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+

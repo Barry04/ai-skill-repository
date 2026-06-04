@@ -1,0 +1,10 @@
+{
+  "host": "192.168.1.100",
+  "port": 22,
+  "user": "root",
+  "identityFile": "~/.ssh/id_rsa",
+  "remoteDir": "/tmp/linux-test-executor",
+  "timeout": 300,
+  "retries": 3,
+  "localLogDir": "logs"
+}
