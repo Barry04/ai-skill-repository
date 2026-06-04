@@ -1,4 +1,4 @@
-# Personal Skill Repository
+# ai-skill-repository
 
 This repository is a personal Skill library for AI agents.
 

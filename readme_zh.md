@@ -1,4 +1,4 @@
-# 个人 Skill 仓库
+# ai-skill-repository
 
 这是一个面向 AI Agent 的个人 Skill 仓库。
 
