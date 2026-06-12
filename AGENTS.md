@@ -1,8 +1,8 @@
 # ai-skill-repository — Agent 入口
 
-仓库：<https://github.com/Barry04/ai-skill-repository> · 协议：**evolving-skill**
+仓库：<https://github.com/Barry04/ai-skill-repository>
 
-个人 Skill 库：**不在仓库里的经验，对 Agent 不存在。**
+个人 Skill 库（含多个 Skill）：**不在仓库里的经验，对 Agent 不存在。**
 
 > 设计参考：[Harness Engineering](https://github.com/deusyu/harness-engineering) — 人类掌舵，智能体执行；约束写在仓库里，用地图指路而非堆一本手册。
 
@@ -45,8 +45,9 @@ skill/
 
 ## 安装
 
-将 `evolving-skill` 协议装到本机 Cursor / Claude Skills 目录：
+将全部 Skill 装到本机 Cursor / Claude Skills 目录：
 
-```powershell
-.\scripts\install-skill.ps1
-```
+| 平台 | 命令 |
+|------|------|
+| Windows | `.\scripts\install-skill.ps1` |
+| macOS / Linux | `bash scripts/install-skill.sh` |
