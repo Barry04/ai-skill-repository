@@ -1,103 +1,56 @@
-# ai-skill-repository
+# evolving-skill
 
-This repository is a personal Skill library for AI agents.
+A compact, file-based **personal Skill library** for AI agents.
 
-The root level contains repository documentation. The `skill/` directory contains one independent skill per subdirectory.
+## In one line
 
-This repository uses lowercase `skill/` as the Skill directory name.
+```
+Before: knowledge in chat / your head → agent guesses each time
+This repo: skill/<name>/SKILL.md on disk → agent reads on demand, user confirms before saving
+```
 
-## Repository Layout
+## Layout
 
 ```text
-README.md                         # Usage guide
-readme_zh.md                      # Chinese usage guide
-UPGRADE.md                        # Upgrade and maintenance guide
-LICENSE
+AGENTS.md              # Agent entry (map + skill index)
+readme_zh.md           # Chinese guide
+UPGRADE.md             # Maintenance conventions
+scripts/install-skill.ps1
 skill/
   evolving-skill/
-    SKILL.md
   java-backend-troubleshooting/
-    SKILL.md
   linux-test-executor/
-    SKILL.md
-    references/
-    tools/
-    assets/
-    agents/
 ```
 
-## How Agents Should Use This Repository
+## For agents
 
-1. Read the repository-level docs when learning how this Skill repository is organized.
-2. Read `skill/evolving-skill/SKILL.md` for the rules about retrieval, save prompts, and skill lifecycle.
-3. Select relevant skills from `skill/<skill-name>/SKILL.md`.
-4. Use at most 2 highly relevant skills as working context for a task.
-5. When reusable knowledge appears during work, ask the user before saving it as a new or updated skill.
+1. Read `AGENTS.md` to find relevant skills
+2. Read `skill/<name>/SKILL.md` (at most 2 per task)
+3. When reusable knowledge appears, **ask the user** before saving (`skill/evolving-skill/SKILL.md`)
 
-## Current Skills
+## For humans
 
-### evolving-skill
+See `UPGRADE.md` for naming, merging, and quality checks.
 
-Defines how an Agent should use and evolve this personal Skill repository.
+Install the harness protocol locally:
 
-Path: `skill/evolving-skill/SKILL.md`
-
-### java-backend-troubleshooting
-
-Stores reusable Java backend troubleshooting rules, including Spring transaction rollback and MyBatis pagination issues.
-
-Path: `skill/java-backend-troubleshooting/SKILL.md`
-
-### linux-test-executor
-
-Allows an Agent to upload files to a Linux test machine, execute remote commands, collect logs, and return structured test results.
-
-Path: `skill/linux-test-executor/SKILL.md`
-
-## Add Or Update Skills
-
-Use `UPGRADE.md` as the maintenance guide.
-
-New skills should follow this structure:
-
-```text
-skill/
-  skill-name/
-    SKILL.md
+```powershell
+.\scripts\install-skill.ps1
 ```
 
-Use optional folders only when needed:
+## Current skills
 
-```text
-references/   # Longer docs loaded only when needed
-tools/        # Scripts or helper programs
-assets/       # Templates, examples, config samples
-agents/       # Agent-facing metadata
-```
-
-## Save Prompt Rule
-
-Agents must not silently write new skills.
-
-When reusable knowledge is discovered, ask:
-
-```text
-这条经验以后可能还会用到：<one-line summary>。
-要不要我把它沉淀到项目 skill 里？
-```
-
-Only save after the user agrees.
-
-## Do Not Store
-
-- Passwords, tokens, private keys, or credentials
-- Sensitive production host details
-- Long logs or bulky context
-- One-off conversation preferences
-- Unverified guesses
+| Skill | Purpose |
+|-------|---------|
+| evolving-skill | Retrieval, evolution, lifecycle |
+| java-backend-troubleshooting | Spring / MyBatis troubleshooting |
+| linux-test-executor | Remote SSH testing and log collection |
+| project-harness-bootstrap | Legacy project harness bootstrap (read-only first pass) |
 
 ## Philosophy
 
-This is not a knowledge base, RAG system, or platform.
+Not a knowledge base or RAG platform — a **versioned constraint surface**:
 
-It is a compact, file-based personal Skill repository: small enough to inspect, structured enough to help agents improve over time.
+- If it is not in the repo, the agent cannot rely on it
+- Entry is a map, not a manual
+- Evolution requires user confirmation, not silent writes
