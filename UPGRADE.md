@@ -58,5 +58,7 @@ Agent 规则见 `skill/evolving-skill/SKILL.md`。要点：
 
 ## 历史迁移
 
+- GitHub 仓库名：**ai-skill-repository**；项目 / 协议名：**evolving-skill**（二者不同，文档与链接勿混用）
 - 根目录 `skill.md` → `skill/java-backend-troubleshooting/SKILL.md`
 - `skill/evolving-skill.md` → `skill/evolving-skill/SKILL.md`
+- `readme_zh.md` → 内容并入 `README.md`（中文主文档），英文见 `README.en.md`

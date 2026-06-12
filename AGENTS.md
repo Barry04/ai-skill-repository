@@ -1,4 +1,6 @@
-# evolving-skill — Agent 入口
+# ai-skill-repository — Agent 入口
+
+仓库：<https://github.com/Barry04/ai-skill-repository> · 协议：**evolving-skill**
 
 个人 Skill 库：**不在仓库里的经验，对 Agent 不存在。**
 
@@ -25,7 +27,8 @@
 
 ```text
 AGENTS.md          ← 你在这里（地图）
-readme_zh.md       ← 人类向说明
+README.md          ← 人类总览（中文）
+README.en.md       ← English overview
 UPGRADE.md         ← 新增/合并 Skill 的维护约定
 skill/
   <name>/SKILL.md  ← 每个 Skill 一份，自包含可执行规则
