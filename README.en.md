@@ -15,9 +15,12 @@ git clone https://github.com/Barry04/ai-skill-repository.git
 cd ai-skill-repository
 ```
 
-```powershell
-.\scripts\install-skill.ps1
-```
+Install all skills to Cursor / Claude (optional):
+
+| Platform | Command |
+|----------|---------|
+| Windows | `.\scripts\install-skill.ps1` |
+| macOS / Linux | `bash scripts/install-skill.sh` |
 
 ---
 

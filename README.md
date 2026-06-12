@@ -27,11 +27,12 @@ git clone https://github.com/Barry04/ai-skill-repository.git
 cd ai-skill-repository
 ```
 
-安装本仓库 **evolving-skill** 协议到 Cursor / Claude（可选）：
+安装所有 Skill 到 Cursor / Claude（可选）：
 
-```powershell
-.\scripts\install-skill.ps1
-```
+| 平台 | 命令 |
+|------|------|
+| Windows | `.\scripts\install-skill.ps1` |
+| macOS / Linux | `bash scripts/install-skill.sh` |
 
 ---
 

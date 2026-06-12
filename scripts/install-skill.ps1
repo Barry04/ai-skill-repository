@@ -6,30 +6,41 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRootFull = (Resolve-Path $RepoRoot).Path
-$sourceSkill = Join-Path $repoRootFull "skill\evolving-skill\SKILL.md"
+$sourceSkillDir = Join-Path $repoRootFull "skill"
 
-if (-not (Test-Path $sourceSkill)) {
-    throw "Source skill not found: $sourceSkill"
+if (-not (Test-Path $sourceSkillDir)) {
+    throw "Skill directory not found: $sourceSkillDir"
+}
+
+$skillDirs = Get-ChildItem -Path $sourceSkillDir -Directory
+if ($skillDirs.Count -eq 0) {
+    throw "No skills found under $sourceSkillDir"
 }
 
 $homeDir = [Environment]::GetFolderPath("UserProfile")
-$targets = @(
-    (Join-Path $homeDir ".claude\skills\evolving-skill\SKILL.md"),
-    (Join-Path $homeDir ".cursor\skills\evolving-skill\SKILL.md")
+$toolDirs = @(
+    (Join-Path $homeDir ".claude\skills"),
+    (Join-Path $homeDir ".cursor\skills")
 )
 
-foreach ($target in $targets) {
-    $targetDir = Split-Path -Path $target -Parent
-    if (-not (Test-Path $targetDir)) {
-        New-Item -ItemType Directory -Path $targetDir -Force | Out-Null
+$totalInstalled = 0
+foreach ($skill in $skillDirs) {
+    $skillName = $skill.Name
+    foreach ($toolDir in $toolDirs) {
+        $targetSkillDir = Join-Path $toolDir $skillName
+        if (Test-Path $targetSkillDir) {
+            Remove-Item -Path $targetSkillDir -Recurse -Force
+        }
+        Copy-Item -Path $skill.FullName -Destination $targetSkillDir -Recurse -Force
     }
-    Copy-Item $sourceSkill $target -Force
+    $totalInstalled++
+    Write-Host "  installed: $skillName"
 }
 
 $agentsSource = Join-Path $repoRootFull "AGENTS.md"
 if (Test-Path $agentsSource) {
-    Write-Host "Tip: AGENTS.md stays in the repo. Open this repo (or symlink it) so agents see the skill index."
+    Write-Host "`nTip: AGENTS.md stays in the repo. Open this repo (or symlink it) so agents see the skill index."
 }
 
-Write-Host "Installed evolving-skill to available tool locations."
-Write-Host "Source: $sourceSkill"
+Write-Host "`nDone. Installed $totalInstalled skill(s) to: $($toolDirs -join ', ')"
+Write-Host "Source: $sourceSkillDir"
