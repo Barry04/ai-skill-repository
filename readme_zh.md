@@ -45,7 +45,7 @@ skill/
 | evolving-skill | 检索、沉淀、生命周期 |
 | java-backend-troubleshooting | Spring 事务、MyBatis 分页等 |
 | linux-test-executor | 远程 SSH 测试与日志收集 |
-| project-harness-bootstrap | 旧项目 Harness 化初稿（只读扫描，不改源码） |
+| project-to-harness-skill | 任意项目 → Harness 文档 + `skills/`（Phase 0–5，资格化评分） |
 
 ## 理念
 

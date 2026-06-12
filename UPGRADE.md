@@ -52,7 +52,9 @@ Agent 规则见 `skill/evolving-skill/SKILL.md`。要点：
 
 | Skill | 备注 |
 |-------|------|
-| project-harness-bootstrap | 目标项目内生成 `AGENTS.md` + `docs/harness/`；模板见 `references/first-pass-templates.md` |
+| project-to-harness-skill | 目标项目生成 Harness 文档 + `skills/` + `skill-registry.md`；见 `skill/project-to-harness-skill/references/` |
+
+旧名 `project-harness-bootstrap` 已重命名为 `project-to-harness-skill`。
 
 ## 历史迁移
 

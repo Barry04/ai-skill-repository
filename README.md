@@ -45,7 +45,7 @@ Install the harness protocol locally:
 | evolving-skill | Retrieval, evolution, lifecycle |
 | java-backend-troubleshooting | Spring / MyBatis troubleshooting |
 | linux-test-executor | Remote SSH testing and log collection |
-| project-harness-bootstrap | Legacy project harness bootstrap (read-only first pass) |
+| project-to-harness-skill | Any project → harness docs + skills/ (qualification, registry, preview-first) |
 
 ## Philosophy
 

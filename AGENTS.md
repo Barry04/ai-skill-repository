@@ -17,7 +17,7 @@
 | evolving-skill | `skill/evolving-skill/SKILL.md` | 使用或演进本仓库（首次必读） |
 | java-backend-troubleshooting | `skill/java-backend-troubleshooting/SKILL.md` | Java / Spring / MyBatis 排错 |
 | linux-test-executor | `skill/linux-test-executor/SKILL.md` | 远程 Linux 测试、SSH 部署验证 |
-| project-harness-bootstrap | `skill/project-harness-bootstrap/SKILL.md` | 旧项目只读扫描，生成 Harness 骨架（不改业务源码） |
+| project-to-harness-skill | `skill/project-to-harness-skill/SKILL.md` | 任意项目 → Harness 文档 + `skills/`（资格化、登记、preview-first） |
 
 新增 Skill 后更新本表。
 
