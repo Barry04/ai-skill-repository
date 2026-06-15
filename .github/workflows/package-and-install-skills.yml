@@ -49,7 +49,7 @@ jobs:
           fi
           echo "Verified ${count} skill(s)"
 
-      - name: Create bundle
+      - name: Create universal bundle
         shell: bash
         run: |
           set -euo pipefail
@@ -57,10 +57,10 @@ jobs:
           zip -r dist/ai-skill-repository-skills.zip skill scripts/install-skill.ps1 scripts/install-skill.sh AGENTS.md README.md
           unzip -l dist/ai-skill-repository-skills.zip
 
-      - name: Upload skill bundle
+      - name: Upload universal bundle
         uses: actions/upload-artifact@v4
         with:
-          name: ai-skill-repository-skills
+          name: universal-bundle
           path: dist/ai-skill-repository-skills.zip
           if-no-files-found: error
 
@@ -75,7 +75,7 @@ jobs:
       - name: Download bundle
         uses: actions/download-artifact@v4
         with:
-          name: ai-skill-repository-skills
+          name: universal-bundle
           path: dist
 
       - name: Extract bundle
@@ -111,6 +111,19 @@ jobs:
           }
           Write-Host "All skills installed under .cursor/skills and .claude/skills"
 
+      - name: Create Windows-specific bundle
+        shell: pwsh
+        run: |
+          $null = New-Item -ItemType Directory -Path "dist-windows" -Force
+          Copy-Item "dist/ai-skill-repository-skills.zip" "dist-windows/ai-skill-repository-skills-windows.zip"
+
+      - name: Upload Windows bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-bundle
+          path: dist-windows/ai-skill-repository-skills-windows.zip
+          if-no-files-found: error
+
   install-macos:
     name: Install on macOS
     needs: package
@@ -122,7 +135,7 @@ jobs:
       - name: Download bundle
         uses: actions/download-artifact@v4
         with:
-          name: ai-skill-repository-skills
+          name: universal-bundle
           path: dist
 
       - name: Extract bundle
@@ -155,6 +168,19 @@ jobs:
           done
           echo "All skills installed under ~/.cursor/skills and ~/.claude/skills"
 
+      - name: Create macOS-specific bundle
+        shell: bash
+        run: |
+          mkdir -p dist-macos
+          cp dist/ai-skill-repository-skills.zip dist-macos/ai-skill-repository-skills-macos.zip
+
+      - name: Upload macOS bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-bundle
+          path: dist-macos/ai-skill-repository-skills-macos.zip
+          if-no-files-found: error
+
   publish-release:
     name: Publish Release Artifacts
     needs: [package, install-windows, install-macos]
@@ -163,13 +189,28 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download bundle
+      - name: Download universal bundle
         uses: actions/download-artifact@v4
         with:
-          name: ai-skill-repository-skills
-          path: dist
+          name: universal-bundle
+          path: dist-universal
 
-      - name: Upload to Release
+      - name: Download Windows bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-bundle
+          path: dist-windows
+
+      - name: Download macOS bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-bundle
+          path: dist-macos
+
+      - name: Upload all artifacts to Release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/ai-skill-repository-skills.zip
+          files: |
+            dist-universal/ai-skill-repository-skills.zip
+            dist-windows/ai-skill-repository-skills-windows.zip
+            dist-macos/ai-skill-repository-skills-macos.zip
