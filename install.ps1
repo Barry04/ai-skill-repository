@@ -1,5 +1,5 @@
 param(
-    [string]$RepoRoot = (Get-Location).Path
+    [string]$RepoRoot = $PSScriptRoot
 )
 
 Set-StrictMode -Version Latest
@@ -9,7 +9,7 @@ $repoRootFull = (Resolve-Path $RepoRoot).Path
 $sourceSkillDir = Join-Path $repoRootFull "skill"
 
 if (-not (Test-Path $sourceSkillDir)) {
-    throw "Skill directory not found: $sourceSkillDir"
+    throw "Skill directory not found: $sourceSkillDir (run this script from the bundle or repo root)"
 }
 
 $skillDirs = Get-ChildItem -Path $sourceSkillDir -Directory
@@ -23,6 +23,12 @@ $toolDirs = @(
     (Join-Path $homeDir ".cursor\skills")
 )
 
+foreach ($toolDir in $toolDirs) {
+    if (-not (Test-Path $toolDir)) {
+        New-Item -ItemType Directory -Path $toolDir -Force | Out-Null
+    }
+}
+
 $totalInstalled = 0
 foreach ($skill in $skillDirs) {
     $skillName = $skill.Name
@@ -35,11 +41,6 @@ foreach ($skill in $skillDirs) {
     }
     $totalInstalled++
     Write-Host "  installed: $skillName"
-}
-
-$agentsSource = Join-Path $repoRootFull "AGENTS.md"
-if (Test-Path $agentsSource) {
-    Write-Host "`nTip: AGENTS.md stays in the repo. Open this repo (or symlink it) so agents see the skill index."
 }
 
 Write-Host "`nDone. Installed $totalInstalled skill(s) to: $($toolDirs -join ', ')"

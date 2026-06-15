@@ -52,5 +52,5 @@ Project
 
 ## 工具链
 
-- `scripts/install-skill.ps1` 仅安装 **evolving-skill** 协议到 `~/.cursor/skills/`
+- 根目录 `install.ps1` / `install.sh` 安装全部 Skill 到 `~/.cursor/skills` 与 `~/.claude/skills`
 - **project-to-harness-skill** 随本仓库 `skill/project-to-harness-skill/` 使用，或在目标项目 clone 本仓库作参考

@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${1:-$(pwd)}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="${1:-$SCRIPT_DIR}"
 SOURCE_SKILL_DIR="$REPO_ROOT/skill"
 
 if [ ! -d "$SOURCE_SKILL_DIR" ]; then
-  echo "Error: Skill directory not found: $SOURCE_SKILL_DIR" >&2
+  echo "Error: Skill directory not found: $SOURCE_SKILL_DIR (run this script from the bundle or repo root)" >&2
   exit 1
 fi
 
+shopt -s nullglob
 SKILL_DIRS=("$SOURCE_SKILL_DIR"/*/)
 if [ ${#SKILL_DIRS[@]} -eq 0 ]; then
   echo "Error: No skills found under $SOURCE_SKILL_DIR" >&2
   exit 1
 fi
 
-HOME_DIR="$HOME"
 TOOL_DIRS=(
-  "$HOME_DIR/.claude/skills"
-  "$HOME_DIR/.cursor/skills"
+  "$HOME/.claude/skills"
+  "$HOME/.cursor/skills"
 )
 
-# Create tool directories if they don't exist
 for TOOL_DIR in "${TOOL_DIRS[@]}"; do
   mkdir -p "$TOOL_DIR"
 done
@@ -36,14 +36,8 @@ for SKILL_DIR in "${SKILL_DIRS[@]}"; do
     cp -R "$SKILL_DIR" "$TARGET"
   done
   echo "  installed: $SKILL_NAME"
-  ((TOTAL++))
+  TOTAL=$((TOTAL + 1))
 done
-
-AGENTS_SOURCE="$REPO_ROOT/AGENTS.md"
-if [ -f "$AGENTS_SOURCE" ]; then
-  echo ""
-  echo "Tip: AGENTS.md stays in the repo. Open this repo (or symlink it) so agents see the skill index."
-fi
 
 echo ""
 echo "Done. Installed $TOTAL skill(s) to: ${TOOL_DIRS[*]}"

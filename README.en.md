@@ -17,7 +17,7 @@ Not a single skill, knowledge base, or RAG platform — a versioned **collection
 - One directory per skill: `skill/<name>/SKILL.md`
 - At most **2** skills per task
 - Saves only after user confirmation ([evolving-skill](skill/evolving-skill/SKILL.md))
-- `install-skill` scripts install **all** skills to Cursor / Claude
+- `install.ps1` / `install.sh` install **all** skills to Cursor / Claude
 
 ---
 
@@ -56,14 +56,16 @@ git clone https://github.com/Barry04/ai-skill-repository.git
 cd ai-skill-repository
 ```
 
-| Platform | Command |
-|----------|---------|
-| Windows | `.\scripts\install-skill.ps1` |
-| macOS / Linux | `bash scripts/install-skill.sh` |
+| Platform | Command (from repo root or extracted bundle root) |
+|----------|---------------------------------------------------|
+| Windows | `.\install.ps1` |
+| macOS / Linux | `bash install.sh` |
+
+Scripts default to `skill/` next to themselves — no path argument needed after extract.
 
 ### CI: package & install
 
-Workflow [.github/workflows/package-and-install-skills.yml](.github/workflows/package-and-install-skills.yml) packages all skills and verifies install on Windows and macOS runners. Download the **Artifacts** zip from Actions, extract, then run the install script with the extract path as `RepoRoot`.
+Workflow [.github/workflows/package-and-install-skills.yml](.github/workflows/package-and-install-skills.yml) builds separate Windows (`skill/` + `install.ps1`) and macOS (`skill/` + `install.sh`) zips. Download the platform **Artifact**, extract, run the install script from that folder.
 
 ---
 

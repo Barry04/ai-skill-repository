@@ -11,16 +11,25 @@ Download `ai-skill-repository-skills.zip` from this release and extract it.
 
 ### Windows
 ```powershell
-.\scripts\install-skill.ps1 -RepoRoot <extracted-path>
+# 克隆仓库
+.\install.ps1
+
+# 或从 Release / Actions 下载 Windows 包，解压后：
+.\install.ps1
 ```
 
 ### macOS / Linux
 ```bash
-bash scripts/install-skill.sh <extracted-path>
+# 克隆仓库
+bash install.sh
+
+# 或从 Release / Actions 下载 macOS 包，解压后：
+bash install.sh
 ```
 
 ## Artifacts
-- `ai-skill-repository-skills.zip` - Complete skill bundle with installation scripts
+- `ai-skill-repository-skills-windows.zip` — `skill/` + `install.ps1`
+- `ai-skill-repository-skills-macos.zip` — `skill/` + `install.sh`
 
 ---
 

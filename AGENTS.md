@@ -49,5 +49,5 @@ skill/
 
 | 平台 | 命令 |
 |------|------|
-| Windows | `.\scripts\install-skill.ps1` |
-| macOS / Linux | `bash scripts/install-skill.sh` |
+| Windows | `.\install.ps1` |
+| macOS / Linux | `bash install.sh` |

@@ -17,7 +17,7 @@
 - 每个 Skill 独立目录：`skill/<name>/SKILL.md`
 - Agent 每次任务最多选 **2** 个高相关 Skill
 - 新经验须**用户确认**后才写入（规则见 [evolving-skill](skill/evolving-skill/SKILL.md)）
-- 运行 `install-skill` 脚本可一次安装**全部** Skill 到 Cursor / Claude
+- 运行 `install.ps1` / `install.sh` 可一次安装**全部** Skill 到 Cursor / Claude
 
 ---
 
@@ -90,10 +90,12 @@ cd ai-skill-repository
 
 安装**全部** Skill 到 Cursor / Claude：
 
-| 平台 | 命令 |
+| 平台 | 命令（在仓库根目录或解压后的包根目录执行） |
 |------|------|
-| Windows | `.\scripts\install-skill.ps1` |
-| macOS / Linux | `bash scripts/install-skill.sh` |
+| Windows | `.\install.ps1` |
+| macOS / Linux | `bash install.sh` |
+
+脚本默认从**自身所在目录**读取 `skill/`，解压后直接执行即可，无需传路径。
 
 `AGENTS.md` 留在仓库内作索引；建议将本仓库加入工作区或符号链接，便于 Agent 发现全部 Skill。
 
@@ -101,16 +103,16 @@ cd ai-skill-repository
 
 推送 `skill/` 或安装脚本变更到 `master` 时，[package-and-install-skills](.github/workflows/package-and-install-skills.yml) 流水线会：
 
-1. **打包** — 将全部 `skill/`、安装脚本、`AGENTS.md` 打成 `ai-skill-repository-skills.zip`
-2. **Windows** — 在 runner 上执行 `install-skill.ps1`，安装到 `%USERPROFILE%\.cursor\skills` 与 `%USERPROFILE%\.claude\skills`
-3. **macOS** — 在 runner 上执行 `install-skill.sh`，安装到 `~/.cursor/skills` 与 `~/.claude/skills`
+1. **分别打包** — Windows 包：`skill/` + `install.ps1`；macOS 包：`skill/` + `install.sh`（无 `scripts/` 目录）
+2. **Windows** — 解压后执行 `.\install.ps1`，安装到 `%USERPROFILE%\.cursor\skills` 与 `%USERPROFILE%\.claude\skills`
+3. **macOS** — 解压后执行 `bash install.sh`，安装到 `~/.cursor/skills` 与 `~/.claude/skills`
 
-在 GitHub **Actions** 页打开最新运行 → **Artifacts** 下载 zip，解压后在本机执行：
+在 GitHub **Actions** 页下载对应平台 Artifact，解压后在包根目录执行：
 
 | 平台 | 命令 |
 |------|------|
-| Windows | `.\scripts\install-skill.ps1 -RepoRoot <解压目录>` |
-| macOS / Linux | `bash scripts/install-skill.sh <解压目录>` |
+| Windows | `.\install.ps1` |
+| macOS | `bash install.sh` |
 
 也可在 Actions 页手动 **Run workflow** 触发。
 
@@ -123,7 +125,9 @@ AGENTS.md              # Agent 入口（Skill 索引）
 README.md              # 本文件
 README.en.md
 UPGRADE.md
-scripts/install-skill.ps1 | .sh
+LICENSE
+install.ps1
+install.sh
 skill/
   evolving-skill/
   project-to-harness-skill/
