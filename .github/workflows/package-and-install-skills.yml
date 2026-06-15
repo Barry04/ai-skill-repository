@@ -1,0 +1,154 @@
+name: Package and Install Skills
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "skill/**"
+      - "scripts/**"
+      - "AGENTS.md"
+      - ".github/workflows/package-and-install-skills.yml"
+  pull_request:
+    paths:
+      - "skill/**"
+      - "scripts/**"
+      - "AGENTS.md"
+      - ".github/workflows/package-and-install-skills.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Package all skills
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify skill layout
+        shell: bash
+        run: |
+          set -euo pipefail
+          count=0
+          for dir in skill/*/; do
+            name=$(basename "$dir")
+            if [ ! -f "skill/${name}/SKILL.md" ]; then
+              echo "Missing SKILL.md: skill/${name}/"
+              exit 1
+            fi
+            echo "ok: ${name}"
+            count=$((count + 1))
+          done
+          if [ "$count" -eq 0 ]; then
+            echo "No skills found under skill/"
+            exit 1
+          fi
+          echo "Verified ${count} skill(s)"
+
+      - name: Create bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          zip -r dist/ai-skill-repository-skills.zip skill scripts/install-skill.ps1 scripts/install-skill.sh AGENTS.md README.md
+          unzip -l dist/ai-skill-repository-skills.zip
+
+      - name: Upload skill bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-skill-repository-skills
+          path: dist/ai-skill-repository-skills.zip
+          if-no-files-found: error
+
+  install-windows:
+    name: Install on Windows
+    needs: package
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-skill-repository-skills
+          path: dist
+
+      - name: Extract bundle
+        shell: pwsh
+        run: Expand-Archive -Path dist/ai-skill-repository-skills.zip -DestinationPath bundle -Force
+
+      - name: Install skills to user profile
+        shell: pwsh
+        run: |
+          Set-StrictMode -Version Latest
+          $ErrorActionPreference = "Stop"
+          & "$PWD/bundle/scripts/install-skill.ps1" -RepoRoot "$PWD/bundle"
+
+      - name: Verify installation
+        shell: pwsh
+        run: |
+          Set-StrictMode -Version Latest
+          $ErrorActionPreference = "Stop"
+          $toolDirs = @(
+            "$env:USERPROFILE\.cursor\skills",
+            "$env:USERPROFILE\.claude\skills"
+          )
+          $skills = Get-ChildItem -Path skill -Directory
+          foreach ($skill in $skills) {
+            $name = $skill.Name
+            foreach ($toolDir in $toolDirs) {
+              $target = Join-Path $toolDir $name
+              if (-not (Test-Path (Join-Path $target "SKILL.md"))) {
+                throw "Missing installed skill: $target\SKILL.md"
+              }
+            }
+            Write-Host "verified: $name"
+          }
+          Write-Host "All skills installed under .cursor/skills and .claude/skills"
+
+  install-macos:
+    name: Install on macOS
+    needs: package
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-skill-repository-skills
+          path: dist
+
+      - name: Extract bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -q dist/ai-skill-repository-skills.zip -d bundle
+          ls -la bundle/skill/
+
+      - name: Install skills to user home
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash bundle/scripts/install-skill.sh "$(pwd)/bundle"
+
+      - name: Verify installation
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOOL_DIRS=("$HOME/.cursor/skills" "$HOME/.claude/skills")
+          for dir in skill/*/; do
+            name=$(basename "$dir")
+            for tool in "${TOOL_DIRS[@]}"; do
+              if [ ! -f "${tool}/${name}/SKILL.md" ]; then
+                echo "Missing: ${tool}/${name}/SKILL.md"
+                exit 1
+              fi
+            done
+            echo "verified: ${name}"
+          done
+          echo "All skills installed under ~/.cursor/skills and ~/.claude/skills"

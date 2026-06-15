@@ -97,6 +97,23 @@ cd ai-skill-repository
 
 `AGENTS.md` 留在仓库内作索引；建议将本仓库加入工作区或符号链接，便于 Agent 发现全部 Skill。
 
+### GitHub Actions 自动打包与安装验证
+
+推送 `skill/` 或安装脚本变更到 `master` 时，[package-and-install-skills](.github/workflows/package-and-install-skills.yml) 流水线会：
+
+1. **打包** — 将全部 `skill/`、安装脚本、`AGENTS.md` 打成 `ai-skill-repository-skills.zip`
+2. **Windows** — 在 runner 上执行 `install-skill.ps1`，安装到 `%USERPROFILE%\.cursor\skills` 与 `%USERPROFILE%\.claude\skills`
+3. **macOS** — 在 runner 上执行 `install-skill.sh`，安装到 `~/.cursor/skills` 与 `~/.claude/skills`
+
+在 GitHub **Actions** 页打开最新运行 → **Artifacts** 下载 zip，解压后在本机执行：
+
+| 平台 | 命令 |
+|------|------|
+| Windows | `.\scripts\install-skill.ps1 -RepoRoot <解压目录>` |
+| macOS / Linux | `bash scripts/install-skill.sh <解压目录>` |
+
+也可在 Actions 页手动 **Run workflow** 触发。
+
 ---
 
 ## 目录结构

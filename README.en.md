@@ -61,6 +61,10 @@ cd ai-skill-repository
 | Windows | `.\scripts\install-skill.ps1` |
 | macOS / Linux | `bash scripts/install-skill.sh` |
 
+### CI: package & install
+
+Workflow [.github/workflows/package-and-install-skills.yml](.github/workflows/package-and-install-skills.yml) packages all skills and verifies install on Windows and macOS runners. Download the **Artifacts** zip from Actions, extract, then run the install script with the extract path as `RepoRoot`.
+
 ---
 
 ## Quick start
