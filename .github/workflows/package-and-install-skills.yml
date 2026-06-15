@@ -152,3 +152,22 @@ jobs:
             echo "verified: ${name}"
           done
           echo "All skills installed under ~/.cursor/skills and ~/.claude/skills"
+
+  publish-release:
+    name: Publish Release Artifacts
+    needs: [package, install-windows, install-macos]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - name: Download bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-skill-repository-skills
+          path: dist
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/ai-skill-repository-skills.zip
