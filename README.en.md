@@ -6,7 +6,7 @@ A **personal Skill library** for AI agents — reusable engineering know-how in 
 
 Inspired by [Harness Engineering](https://github.com/deusyu/harness-engineering).
 
-> **Repo name:** `ai-skill-repository` · **Contains multiple skills**; `evolving-skill` is one of them (the repo protocol), not the whole project.
+> **Repo name:** `ai-skill-repository` · **Contains multiple skills**; `evolving-skill` is the evolution protocol (global); day-to-day skills live in each project's `skill/`.
 
 ---
 
@@ -23,9 +23,10 @@ Not a single skill, knowledge base, or RAG platform — a versioned **collection
 
 ## Skills in this repo
 
-### evolving-skill — repo protocol
+### evolving-skill — evolution protocol (global install, project writes)
 
-How to read, apply, and evolve this skill library. Required when working **in this repository**.
+- **Protocol** → `~/.cursor/skills/`, `~/.claude/skills/` (via install)
+- **Generated / evolved skills** → **current project** `skill/<name>/`
 
 → [skill/evolving-skill/SKILL.md](skill/evolving-skill/SKILL.md)
 

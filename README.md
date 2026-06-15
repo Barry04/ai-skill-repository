@@ -6,7 +6,7 @@
 
 设计参考 [Harness Engineering](https://github.com/deusyu/harness-engineering)：**人类掌舵，智能体执行**；约束写在仓库里；入口是地图，不是百科全书。
 
-> **仓库名** `ai-skill-repository` · **内含多个 Skill**，`evolving-skill` 是其中之一（本仓库的使用与演进协议），不是仓库的全部。
+> **仓库名** `ai-skill-repository` · 内含多个可全局安装的 Skill；**evolving-skill** 是演进协议，日常沉淀写在**各项目**的 `skill/` 目录。
 
 ---
 
@@ -23,11 +23,14 @@
 
 ## 当前 Skill 一览
 
-### evolving-skill — 本仓库协议
+### evolving-skill — 演进协议（装全局，写项目）
 
-**何时用：** 使用或演进 `ai-skill-repository` 本身时必读。
+**何时用：** 任何项目里需要沉淀、合并、演进 Skill 时。
 
-定义 Skill 如何检索、注入、沉淀与收熵：先问用户再保存、合并重叠 Skill、更新 `AGENTS.md` 索引等。**不负责具体业务排错或部署**，而是管「这个 Skill 库怎么运转」。
+- **协议本身** → 安装到 `~/.cursor/skills/`、`~/.claude/skills/`（跨项目）
+- **生成 / 演化的 Skill** → 写在**当前项目** `skill/<name>/`，并更新项目 `AGENTS.md`
+
+不负责具体业务排错，而是管「怎么发现经验、怎么问用户、怎么落到项目里」。
 
 → [skill/evolving-skill/SKILL.md](skill/evolving-skill/SKILL.md)
 
@@ -66,17 +69,15 @@
 ## 它们如何配合
 
 ```text
-ai-skill-repository（本仓库，多个 Skill）
-  │
-  ├─ evolving-skill          → 管 Skill 库怎么读、怎么存
-  ├─ project-to-harness-skill → 把目标项目变成 Harness 结构
-  ├─ java-backend-troubleshooting → 日常 Java 排错
-  └─ linux-test-executor     → 远程测试验证
+全局（install.ps1 / install.sh 安装到 ~/.cursor/skills 等）
+  ├─ evolving-skill              → 演进协议
+  ├─ project-to-harness-skill  → 项目 Harness 化
+  ├─ java-backend-troubleshooting
+  └─ linux-test-executor
 
-目标项目（由 project-to-harness-skill 生成）
-  └─ AGENTS.md + docs/harness/ + skills/
-       ↓ 日常开发中沉淀的经验
-  └─ evolving-skill 协议 → 回写到本仓库 skill/（用户确认后）
+目标项目（随项目 Git）
+  ├─ docs/harness/ + skills/   → project-to-harness-skill 批量生成（可选）
+  └─ skill/                    → evolving-skill 日常沉淀（用户确认后写入）
 ```
 
 ---

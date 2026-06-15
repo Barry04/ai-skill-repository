@@ -30,7 +30,7 @@ Phase 3 — Skills（含 Merge）
 
 Phase 4 — skill-registry.md
 
-Phase 5 — evolving-skill handoff：□本次提示 □跳过
+Phase 5 — evolving-skill 衔接：□提示后续沉淀到项目 skill/ □跳过
 
 [已验证] <a>  |  [推断] <b>  |  待核对 <c>
 

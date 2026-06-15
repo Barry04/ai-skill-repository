@@ -22,7 +22,7 @@ flowchart TD
   Plan --> User{用户确认?}
   User -->|否| End([无写入])
   User -->|是| Write[写入批准工件]
-  Write --> P5[Phase 5\nevolving-skill Handoff 可选]
+  Write --> P5[Phase 5\nevolving-skill 衔接]
   P5 --> End2([收尾])
 ```
 
@@ -82,14 +82,12 @@ flowchart TB
   Agent --> writable
 ```
 
-## evolving-skill 闭环
+## evolving-skill 衔接
 
 ```mermaid
 flowchart LR
   P[Project] --> PTH[project-to-harness-skill]
-  PTH --> HD[Harness Docs]
-  PTH --> HS[Harness Skills]
-  HS --> ES[evolving-skill]
-  ES --> CE[Continuous Evolution]
-  CE -.->|验证后回流| HS
+  PTH --> HS[skills/ + docs/harness]
+  HS --> ES[evolving-skill 协议 全局]
+  ES --> PS[项目 skill/ 增量沉淀]
 ```

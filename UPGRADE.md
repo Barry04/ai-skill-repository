@@ -37,7 +37,8 @@ Rules: ...
 Agent 规则见 `skill/evolving-skill/SKILL.md`。要点：
 
 - 验证通过 + 可复用 → 问用户
-- 用户同意 → 写入并告知路径
+- 用户同意 → 写入**当前项目** `skill/`，并更新项目 `AGENTS.md`
+- 禁止写入全局 Skill 目录（`evolving-skill` 协议除外）
 - 用户拒绝 → 本会话不再追问同一条
 
 ## 质量检查

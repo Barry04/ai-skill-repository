@@ -10,13 +10,13 @@
 
 1. 从下表选最多 **2** 个相关 Skill，读其 `SKILL.md`
 2. 按 Skill 执行任务；长细节在 `references/`，脚本在 `tools/`
-3. 发现可复用经验 → **先问用户**，同意后再写入（规则见 `skill/evolving-skill/SKILL.md`）
+3. 发现可复用经验 → **先问用户**，同意后写入**当前项目** `skill/`（规则见 `skill/evolving-skill/SKILL.md`）
 
 ## Skill 索引
 
 | Skill | 路径 | 何时用 |
 |-------|------|--------|
-| evolving-skill | `skill/evolving-skill/SKILL.md` | 使用或演进本仓库（首次必读） |
+| evolving-skill | `skill/evolving-skill/SKILL.md` | 演进协议（全局安装）；生成/演化的 Skill 写在**项目** `skill/` |
 | java-backend-troubleshooting | `skill/java-backend-troubleshooting/SKILL.md` | Java / Spring / MyBatis 排错 |
 | linux-test-executor | `skill/linux-test-executor/SKILL.md` | 远程 Linux 测试、SSH 部署验证 |
 | project-to-harness-skill | `skill/project-to-harness-skill/SKILL.md` | 任意项目 → Harness 文档 + `skills/`（资格化、登记、preview-first） |

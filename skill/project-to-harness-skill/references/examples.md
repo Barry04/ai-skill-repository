@@ -45,7 +45,7 @@
 
 **约束**：同样 preview-first；不写 fork 除非用户明确要求。
 
-**Handoff**：提示用户哪些 `skills/troubleshooting/` 可迁入个人 evolving-skill。
+**后续沉淀**：使用 evolving-skill 协议，写入本项目 `skill/`。
 
 ---
 

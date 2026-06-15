@@ -31,7 +31,7 @@ description: >-
 
 ## 维护
 
-验证后更新 Verification State；泛化后可 handoff 到 evolving-skill。
+验证后更新 Verification State；日常增量沉淀走 evolving-skill，写入项目 `skill/`。
 ```
 
 ## 标准 Skill 骨架
