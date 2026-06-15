@@ -21,6 +21,11 @@ TOOL_DIRS=(
   "$HOME_DIR/.cursor/skills"
 )
 
+# Create tool directories if they don't exist
+for TOOL_DIR in "${TOOL_DIRS[@]}"; do
+  mkdir -p "$TOOL_DIR"
+done
+
 TOTAL=0
 for SKILL_DIR in "${SKILL_DIRS[@]}"; do
   [ -d "$SKILL_DIR" ] || continue
