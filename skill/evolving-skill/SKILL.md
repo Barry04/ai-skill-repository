@@ -1,14 +1,31 @@
 ---
 name: evolving-skill
 description: >-
-  MUST use when evolving project skills. Protocol lives in global skills dir;
-  generated or updated skills go to the current project's skill/. Ask the user
-  before saving.
+  MUST use when saving reusable knowledge to the current project's skill/,
+  merging or evolving project skills, end-of-task skill review, or skill lifecycle
+  maintenance. Use when the user mentions 沉淀、保存 skill、写入 skill、演进 skill、
+  合并 skill、收熵、新建 skill、更新 skill 索引, or after verified bug fixes,
+  deploy flows, or user corrections that should be captured. Ask the user before
+  writing; never silent save. Evolution phase protocol after Harness Bootstrap.
+  Complements domain skills (java-backend-troubleshooting etc.); read at task end
+  when reusable experience appears. On first use in a project, check AGENTS.md
+  for the evolving-skill task-end rule and ask the user before adding it.
 ---
 
 # Evolving Skill Harness
 
-**evolving-skill** 是演进**协议**（装在全局 Skill 目录）；**生成或演化的 Skill** 写在**当前项目**的 `skill/` 下。
+**evolving-skill** 是演进**协议**（全局安装）；**生成或演化的 Skill** 写在**当前项目**的 `skill/` 下。
+
+## 何时必须读（触发）
+
+| 时机 | 触发词 / 场景 |
+|------|----------------|
+| **任务收尾** | 问题已解决、流程跑通，存在可复用经验 |
+| **用户纠正** | 「以后都这样」「不要用 X」「保存下来」 |
+| **显式请求** | 沉淀、保存 skill、写入 skill/、演进、合并 skill、收熵、新建 skill |
+| **Harness 化之后** | project-to-harness-skill 完成，日常增量写入 `skill/` |
+
+> 与领域 Skill（排错、部署等）**不互斥**：领域 Skill 解决「怎么做」；本协议管「做完要不要沉淀、怎么写进项目 skill/」。**任务结束时有可复用经验，必须读本 Skill。**
 
 ---
 
@@ -27,6 +44,45 @@ description: >-
 ---
 
 ## 使用
+
+### 首次进入项目：检查 AGENTS.md
+
+**在本项目第一次因 evolving-skill 被加载时**（本对话内尚未检查过则视为第一次），读取**当前项目根** `AGENTS.md`（若存在），确认是否已写入 **evolving-skill 收尾规则**。
+
+**视为「已有规则」**（满足其一即可）：
+
+- 正文出现 `evolving-skill`，且同句或相邻句含「任务收尾」「收尾必读」「沉淀」之一
+- Skill 索引表中有 `evolving-skill` 行，且「何时用」列含「收尾」或「沉淀」
+
+**若 `AGENTS.md` 存在但缺少上述规则**：
+
+1. 告知用户缺什么（一步/索引缺 evolving-skill 收尾说明）
+2. **先问用户**是否补全；禁止静默修改
+3. 用户同意后，按下方**推荐片段**合并进现有 `AGENTS.md`（保持 ≤ 60 行；有「三步」则改第 3 步，否则在 Skill 索引前增「Agent 三步」小节）
+
+**推荐片段**（按需合并，勿重复堆砌）：
+
+```markdown
+## 三步
+
+1. 从下表选最多 **2** 个相关 Skill，读其 `SKILL.md`
+2. 按 Skill 执行任务；长细节在 `references/`，脚本在 `tools/`
+3. **任务收尾** → 读 **evolving-skill**；发现可复用经验 → **先问用户**，同意后写入**当前项目** `skill/`
+```
+
+Skill 索引行：
+
+```markdown
+| evolving-skill | `skill/evolving-skill/SKILL.md` | **任务收尾必读**；沉淀/合并 skill；用户确认后写项目 `skill/` |
+```
+
+**若尚无 `AGENTS.md`**：提示用户可先跑 project-to-harness-skill，或询问是否新建最小 `AGENTS.md`（仍须用户确认后写入）。
+
+**若用户拒绝补全**：本会话不再追问；照常执行收尾沉淀流程。
+
+---
+
+### 日常流程
 
 任务开始或方向变化时：
 
