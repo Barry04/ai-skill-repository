@@ -75,6 +75,10 @@ Workflow [.github/workflows/package-and-install-skills.yml](.github/workflows/pa
 - **Agents:** [AGENTS.md](AGENTS.md) → pick a skill → execute → ask before saving
 - **Humans:** [UPGRADE.md](UPGRADE.md) for maintenance
 
+## Trigger reliability
+
+If skills rarely trigger, check `AGENTS.md` first, then strengthen each `SKILL.md` frontmatter `description` with English and Chinese task wording, common errors, tool names, framework names, and explicit "when to use" phrases. Keywords only in the body are often too late.
+
 ---
 
 ## License

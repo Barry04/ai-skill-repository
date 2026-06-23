@@ -32,6 +32,26 @@ Rules: ...
 - 敏感值用 `<host>` `<port>` `<user>` `<key_path>` 占位
 - 不存密码、token、私钥、生产细节
 
+## 触发率维护
+
+Skill 触发率低时，优先改 `description` 和 `AGENTS.md`，不要先堆正文。
+
+`description` 必须尽量覆盖：
+
+- 中文任务说法：例如 `远程测试`、`事务不回滚`、`初始化 AGENTS.md`
+- 英文任务说法：例如 `remote Linux testing`、`Spring transaction rollback`
+- 常见报错文本：例如 `Permission denied`、`No route to host`
+- 工具 / 框架名：例如 `SSH`、`scp`、`Spring Boot`、`MyBatis`
+- 明确触发语：强触发场景可写 `MUST use when ...`
+
+检查清单：
+
+- [ ] `AGENTS.md` 有任务开始读取规则
+- [ ] `AGENTS.md` 索引表包含该 Skill
+- [ ] `description` 包含中英文触发词
+- [ ] 常见用户说法没有只藏在正文
+- [ ] Skill 目录存在 `SKILL.md`
+
 ## 沉淀流程
 
 Agent 规则见 `skill/evolving-skill/SKILL.md`。要点：
@@ -54,8 +74,7 @@ Agent 规则见 `skill/evolving-skill/SKILL.md`。要点：
 | Skill | 备注 |
 |-------|------|
 | project-to-harness-skill | 目标项目生成 Harness 文档 + `skills/` + `skill-registry.md`；见 `skill/project-to-harness-skill/references/` |
-
-旧名 `project-harness-bootstrap` 已重命名为 `project-to-harness-skill`。
+`project-to-harness-skill` 负责 Harness 化、AGENTS.md、Skill 索引和项目级 Skill 生成。
 
 ## 历史迁移
 

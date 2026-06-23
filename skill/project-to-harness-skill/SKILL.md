@@ -1,10 +1,12 @@
 ---
 name: project-to-harness-skill
 description: >-
-  Project → Harness Skill Generator for new, in-progress, legacy, or open-source
-  repos. Read-only discovery, knowledge qualification, harness docs, and skills/
-  generation with preview-first. Use for harness init, AGENTS.md, skill extraction,
-  GitHub project analysis, or project-to-harness-skill workflow.
+  MUST use when converting any repository into an Agent-readable Harness project
+  with AGENTS.md, docs/harness, skill extraction, skill registry, or generated
+  project skills. Use when the user mentions Harness 化、项目知识提取、生成
+  AGENTS.md、初始化 Agent 入口、生成 skill、提取 skill、技能登记、项目地图、
+  legacy repo analysis、open-source repo analysis、preview-first generation, or
+  asks to make a project easier for Agents to understand.
 ---
 
 # Project → Harness Skill Generator

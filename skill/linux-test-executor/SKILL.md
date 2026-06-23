@@ -1,6 +1,11 @@
 ---
 name: linux-test-executor
-description: Allow Agent to upload files to Linux servers, execute remote SSH commands or scripts, collect logs, and validate deployment or integration test results automatically. Use when Agent needs to test Java services, Docker deployments, database integrations, health checks, or other backend changes on a remote Linux test machine.
+description: >-
+  MUST use for remote Linux test execution, SSH validation, deployment checks,
+  file upload, log collection, or integration testing on a Linux test machine.
+  Use when the user mentions Linux 测试机、远程测试、SSH、scp、上传文件、执行远程命令、
+  收集日志、部署验证、集成测试、健康检查、Docker 验证、Java 服务验证、达梦数据库测试,
+  or provides host/ip/port/user/key information for running tests.
 ---
 
 # Linux Test Executor Skill

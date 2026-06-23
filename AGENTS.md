@@ -1,5 +1,7 @@
 # ai-skill-repository — Agent 入口
 
+**强规则：进入本仓库处理任何任务时，先读本文件，再从 Skill 索引中选择相关 Skill。**
+
 仓库：<https://github.com/Barry04/ai-skill-repository>
 
 个人 Skill 库（含多个 Skill）：**不在仓库里的经验，对 Agent 不存在。**
@@ -8,7 +10,7 @@
 
 ## 三步
 
-1. 从下表选最多 **2** 个相关 Skill，读其 `SKILL.md`
+1. **任务开始** → 先读本文件；从下表选最多 **2** 个相关 Skill，读其 `SKILL.md`
 2. 按 Skill 执行任务；长细节在 `references/`，脚本在 `tools/`
 3. **任务收尾** → 读 **evolving-skill**；发现可复用经验 → **先问用户**，同意后写入**当前项目** `skill/`
 
@@ -42,6 +44,7 @@ skill/
 | 渐进披露 | 先索引 → 再 `SKILL.md` → 按需 `references/` |
 | 用户确认才写 | 禁止静默新建或修改 Skill |
 | 收熵 | 触发词重叠则合并；过时则删 |
+| 提高触发率 | `description` 必须写入中文/英文触发词、报错文本、任务说法 |
 
 ## 安装
 
