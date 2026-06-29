@@ -1,0 +1,21 @@
+{
+  "id": "mybatis-pagination",
+  "skill": "java-backend-troubleshooting",
+  "input": "MyBatis 分页失效，limit 没有生效，SQL 好像被改写了。",
+  "context": "The application uses a pagination plugin and custom SQL wrappers.",
+  "expected": [
+    "pagination plugin",
+    "enabled",
+    "SQL",
+    "wrapped",
+    "interceptor"
+  ],
+  "forbidden": [
+    "change Entity",
+    "modify package.json",
+    "private key"
+  ],
+  "score_points": 5,
+  "tags": ["mybatis", "pagination", "interceptor"]
+}
+

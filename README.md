@@ -17,6 +17,7 @@
 - 每个 Skill 独立目录：`skill/<name>/SKILL.md`
 - Agent 每次任务最多选 **2** 个高相关 Skill
 - 新经验须**用户确认**后才写入（规则见 [evolving-skill](skill/evolving-skill/SKILL.md)）
+- SkillOpt 只做离线评测 / 优化 proposal，不直接覆盖正式 Skill
 - 运行 `install.ps1` / `install.sh` 可一次安装**全部** Skill 到 Cursor / Claude
 
 ---
@@ -66,18 +67,34 @@
 
 ---
 
+### skillopt-adapter — SkillOpt 优化闭环
+
+**何时用：** 用 SkillOpt 做 skill 优化、benchmark、regression、validation gate 或审查 `best_skill.md` 候选结果时。
+
+SkillOpt 输出必须先进 `experiments/skillopt/` 和 `proposals/`；正式 `skill/<name>/SKILL.md` 只有在用户确认后才合并。CI 只跑确定性 regression，不调用模型。
+
+→ [skill/skillopt-adapter/SKILL.md](skill/skillopt-adapter/SKILL.md)
+
+---
+
 ## 它们如何配合
 
 ```text
 全局（install.ps1 / install.sh 安装到 ~/.cursor/skills 等）
   ├─ evolving-skill              → 演进协议
   ├─ project-to-harness-skill  → 项目 Harness 化
+  ├─ skillopt-adapter          → SkillOpt 优化 proposal / regression
   ├─ java-backend-troubleshooting
   └─ linux-test-executor
 
 目标项目（随项目 Git）
   ├─ docs/harness/ + skills/   → project-to-harness-skill 批量生成（可选）
   └─ skill/                    → evolving-skill 日常沉淀（用户确认后写入）
+
+本仓库优化实验室（不安装到工具）
+  ├─ eval/<skill>/              → regression cases + rubric
+  ├─ experiments/skillopt/      → 本地 SkillOpt 运行产物
+  └─ proposals/<skill>/         → 待审查候选修改
 ```
 
 ---
@@ -131,9 +148,13 @@ install.ps1
 install.sh
 skill/
   evolving-skill/
+  skillopt-adapter/
   project-to-harness-skill/
   java-backend-troubleshooting/
   linux-test-executor/         # 含 references/、tools/、assets/
+eval/                          # Skill regression 用例
+scripts/skillopt/              # 评分、proposal 生成与审查脚本
+proposals/                     # SkillOpt 候选修改
 ```
 
 **渐进披露：** `AGENTS.md` → `skill/<name>/SKILL.md` → `references/` / `tools/`。
@@ -146,6 +167,16 @@ skill/
 
 **人类：** 新增或合并 Skill 见 [UPGRADE.md](UPGRADE.md)。
 
+**SkillOpt 回归：**
+
+```powershell
+pwsh scripts/skillopt/score-skill.ps1 -Skill java-backend-troubleshooting
+```
+
+```bash
+bash scripts/skillopt/score-skill.sh --skill java-backend-troubleshooting
+```
+
 ---
 
 ## 设计原则
@@ -156,6 +187,7 @@ skill/
 | 地图非手册 | 入口短；细节在各 `SKILL.md` |
 | 先预览后写入 | Harness 化与沉淀须用户批准 |
 | Skill 即知识单元 | 短、可执行、触发词清晰 |
+| 优化不直写 | SkillOpt 输出先进 proposal，确认后才合并 |
 | 收熵 | 合并重叠，删除过时 |
 
 ## 触发率维护

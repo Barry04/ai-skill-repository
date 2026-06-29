@@ -61,6 +61,25 @@ Agent 规则见 `skill/evolving-skill/SKILL.md`。要点：
 - 禁止写入全局 Skill 目录（`evolving-skill` 协议除外）
 - 用户拒绝 → 本会话不再追问同一条
 
+## SkillOpt 优化流程
+
+SkillOpt 是离线优化 / 评测层，不是正式记录系统。正式 Skill 仍以
+`skill/<name>/SKILL.md` 为准。
+
+1. 选择已有 Skill，并确认 `eval/<skill>/cases/*.json` 与 `rubric.md` 存在。
+2. 先跑 regression：`pwsh scripts/skillopt/score-skill.ps1 -Skill <skill>`。
+3. 本地运行 SkillOpt 或提供 `best_skill.md`，用 `scripts/skillopt/run-skillopt.ps1` 生成 proposal。
+4. 用 `scripts/skillopt/promote-proposal.ps1` 只读审查 diff 和 checklist。
+5. 用户确认后才手动合并进 `skill/<name>/SKILL.md`。
+6. 合并后再次跑 regression；新增 Skill 时同步更新 `AGENTS.md` 索引。
+
+约束：
+
+- CI 只跑确定性评分，不调用模型或外部付费服务。
+- `experiments/skillopt/` 存本地运行产物；大体积日志不提交。
+- `proposals/` 是候选修改预览，不是正式 Skill。
+- 不允许 SkillOpt 输出直接覆盖 `skill/`。
+
 ## 质量检查
 
 - [ ] 目录名 = `name`
@@ -74,6 +93,7 @@ Agent 规则见 `skill/evolving-skill/SKILL.md`。要点：
 | Skill | 备注 |
 |-------|------|
 | project-to-harness-skill | 目标项目生成 Harness 文档 + `skills/` + `skill-registry.md`；见 `skill/project-to-harness-skill/references/` |
+| skillopt-adapter | SkillOpt 优化、benchmark、regression、proposal 审查；正式 Skill 仍需用户确认后合并 |
 `project-to-harness-skill` 负责 Harness 化、AGENTS.md、Skill 索引和项目级 Skill 生成。
 
 ## 历史迁移

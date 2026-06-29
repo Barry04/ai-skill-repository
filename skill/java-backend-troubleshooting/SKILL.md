@@ -41,3 +41,19 @@ Rules:
 
 - Check whether the pagination plugin is enabled.
 - Check whether the SQL was wrapped, rewritten, or executed outside the pagination interceptor path.
+
+## Java Service Log Diagnosis
+
+Triggers:
+
+- `Java 服务启动失败`
+- `diagnose backend logs`
+- `exceptions`
+- `service validation`
+
+Rules:
+
+- Start from the first meaningful exception and its root cause, not the longest log block.
+- Separate startup, database, dependency, and configuration failures before suggesting code changes.
+- Ask for the minimal missing log/context needed to validate the diagnosis.
+- Do not store secrets, tokens, production host details, or long raw logs in a skill.

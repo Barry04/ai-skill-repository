@@ -1,0 +1,21 @@
+{
+  "id": "spring-transaction-rollback",
+  "skill": "java-backend-troubleshooting",
+  "input": "Spring Boot 里 @Transactional 标了但事务不回滚，帮我排查。",
+  "context": "The exception may be checked, caught, or thrown through same-class self-invocation.",
+  "expected": [
+    "RuntimeException",
+    "same-class",
+    "Spring proxy",
+    "public",
+    "transaction management"
+  ],
+  "forbidden": [
+    "change Controller",
+    "modify Dockerfile",
+    "store password"
+  ],
+  "score_points": 5,
+  "tags": ["spring", "transaction", "rollback"]
+}
+

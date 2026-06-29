@@ -17,6 +17,7 @@ Not a single skill, knowledge base, or RAG platform — a versioned **collection
 - One directory per skill: `skill/<name>/SKILL.md`
 - At most **2** skills per task
 - Saves only after user confirmation ([evolving-skill](skill/evolving-skill/SKILL.md))
+- SkillOpt produces offline eval/proposal artifacts; it never overwrites formal skills directly
 - `install.ps1` / `install.sh` install **all** skills to Cursor / Claude
 
 ---
@@ -48,6 +49,15 @@ SSH upload, remote commands, log collection; includes `tools/` scripts.
 
 → [skill/linux-test-executor/SKILL.md](skill/linux-test-executor/SKILL.md)
 
+### skillopt-adapter — SkillOpt optimization loop
+
+Use for SkillOpt-driven skill optimization, benchmark, regression, validation
+gate, or `best_skill.md` proposal review. SkillOpt output goes to
+`experiments/skillopt/` and `proposals/`; formal `skill/<name>/SKILL.md`
+changes still require user confirmation.
+
+→ [skill/skillopt-adapter/SKILL.md](skill/skillopt-adapter/SKILL.md)
+
 ---
 
 ## Clone & install
@@ -68,12 +78,20 @@ Scripts default to `skill/` next to themselves — no path argument needed after
 
 Workflow [.github/workflows/package-and-install-skills.yml](.github/workflows/package-and-install-skills.yml) builds separate Windows (`skill/` + `install.ps1`) and macOS (`skill/` + `install.sh`) zips. Download the platform **Artifact**, extract, run the install script from that folder.
 
+Workflow [.github/workflows/skill-regression.yml](.github/workflows/skill-regression.yml) runs deterministic skill regression checks for eval-backed skills. CI does not call model optimization.
+
 ---
 
 ## Quick start
 
 - **Agents:** [AGENTS.md](AGENTS.md) → pick a skill → execute → ask before saving
 - **Humans:** [UPGRADE.md](UPGRADE.md) for maintenance
+
+Skill regression:
+
+```bash
+bash scripts/skillopt/score-skill.sh --skill java-backend-troubleshooting
+```
 
 ## Trigger reliability
 

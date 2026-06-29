@@ -1,0 +1,44 @@
+name: Skill Regression
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "skill/**"
+      - "eval/**"
+      - "scripts/skillopt/**"
+      - ".github/workflows/skill-regression.yml"
+  pull_request:
+    paths:
+      - "skill/**"
+      - "eval/**"
+      - "scripts/skillopt/**"
+      - ".github/workflows/skill-regression.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    name: Skill regression scoring
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Score Java backend troubleshooting
+        shell: bash
+        run: bash scripts/skillopt/score-skill.sh --skill java-backend-troubleshooting
+
+      - name: Warn for skills without eval
+        shell: bash
+        run: |
+          set -euo pipefail
+          for dir in skill/*/; do
+            name=$(basename "$dir")
+            if [ ! -d "eval/${name}/cases" ]; then
+              echo "::warning title=Missing eval::No regression eval exists for skill '${name}'"
+            fi
+          done
+

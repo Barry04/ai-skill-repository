@@ -22,6 +22,7 @@
 | java-backend-troubleshooting | `skill/java-backend-troubleshooting/SKILL.md` | Java / Spring / MyBatis 排错 |
 | linux-test-executor | `skill/linux-test-executor/SKILL.md` | 远程 Linux 测试、SSH 部署验证 |
 | project-to-harness-skill | `skill/project-to-harness-skill/SKILL.md` | 任意项目 → Harness 文档 + `skills/`（资格化、登记、preview-first） |
+| skillopt-adapter | `skill/skillopt-adapter/SKILL.md` | SkillOpt 优化 / benchmark / regression / proposal 审查 |
 
 新增 Skill 后更新本表。
 
@@ -32,6 +33,8 @@ AGENTS.md          ← 你在这里（地图）
 README.md          ← 人类总览（中文）
 README.en.md       ← English overview
 UPGRADE.md         ← 新增/合并 Skill 的维护约定
+eval/              ← Skill 回归评测用例（不安装）
+proposals/         ← SkillOpt 候选修改预览（用户确认后才合并）
 skill/
   <name>/SKILL.md  ← 每个 Skill 一份，自包含可执行规则
 ```

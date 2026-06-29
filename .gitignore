@@ -27,3 +27,12 @@ node_modules/
 __pycache__/
 *.pyc
 
+# SkillOpt local experiment artifacts
+experiments/skillopt/**/runs/
+experiments/skillopt/**/trace/
+experiments/skillopt/**/logs/
+experiments/skillopt/**/*.jsonl
+experiments/skillopt/**/*.log
+experiments/skillopt/**/*.tmp
+experiments/skillopt/**/best_skill.md
+!experiments/skillopt/.gitkeep

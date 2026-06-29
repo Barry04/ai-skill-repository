@@ -1,0 +1,19 @@
+{
+  "id": "backend-log-diagnosis",
+  "skill": "java-backend-troubleshooting",
+  "input": "Java 服务启动失败，有异常日志，先帮我判断怎么排查。",
+  "context": "No source code change has been requested yet; the task is diagnostic.",
+  "expected": [
+    "diagnose backend logs",
+    "exceptions",
+    "service validation",
+    "Java service"
+  ],
+  "forbidden": [
+    "save production host",
+    "store token",
+    "rewrite Service"
+  ],
+  "score_points": 4,
+  "tags": ["java", "logs", "diagnosis"]
+}
