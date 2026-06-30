@@ -1,15 +1,19 @@
 ---
 name: evolving-skill
 description: >-
-  MUST use when saving reusable knowledge to the current project's skill/,
-  merging or evolving project skills, end-of-task skill review, or skill lifecycle
-  maintenance. Use when the user mentions 沉淀、保存 skill、写入 skill、演进 skill、
-  合并 skill、收熵、新建 skill、更新 skill 索引, or after verified bug fixes,
-  deploy flows, or user corrections that should be captured. Ask the user before
-  writing; never silent save. Evolution phase protocol after Harness Bootstrap.
-  Complements domain skills (java-backend-troubleshooting etc.); read at task end
-  when reusable experience appears. On first use in a project, check AGENTS.md
-  for the evolving-skill task-end rule and ask the user before adding it.
+  MUST use at normal conversation/task wrap-up to decide whether reusable
+  experience should be saved. Trigger before final response after a bug fix,
+  code change, test/deploy flow, troubleshooting session, project setup, user
+  correction, or any completed workflow that produced repeatable knowledge.
+  Also use when saving reusable knowledge to the current project's skill/,
+  merging or evolving project skills, end-of-task skill review, or skill
+  lifecycle maintenance. Use when the user mentions 沉淀、保存 skill、写入
+  skill、演进 skill、合并 skill、收熵、新建 skill、更新 skill 索引、以后都这样、
+  记住这个做法. Ask the user before writing; never silent save. Complements
+  domain skills; always run the task-end skill review when reusable experience
+  appears, even if the user did not explicitly ask to save a skill. On first use
+  in a project, check AGENTS.md for the evolving-skill task-end rule and ask the
+  user before adding it.
 ---
 
 # Evolving Skill Harness
@@ -21,11 +25,12 @@ description: >-
 | 时机 | 触发词 / 场景 |
 |------|----------------|
 | **任务收尾** | 问题已解决、流程跑通，存在可复用经验 |
+| **普通对话收尾** | 准备 final 前，刚完成代码修改、排错、测试、部署、项目配置或用户纠正，且有可重复做法 |
 | **用户纠正** | 「以后都这样」「不要用 X」「保存下来」 |
 | **显式请求** | 沉淀、保存 skill、写入 skill/、演进、合并 skill、收熵、新建 skill |
 | **Harness 化之后** | project-to-harness-skill 完成，日常增量写入 `skill/` |
 
-> 与领域 Skill（排错、部署等）**不互斥**：领域 Skill 解决「怎么做」；本协议管「做完要不要沉淀、怎么写进项目 skill/」。**任务结束时有可复用经验，必须读本 Skill。**
+> 与领域 Skill（排错、部署等）**不互斥**：领域 Skill 解决「怎么做」；本协议管「做完要不要沉淀、怎么写进项目 skill/」。**任务结束时有可复用经验，必须读本 Skill；即使用户没有主动说“保存”，也要在 final 前做一次收尾判断。**
 
 ---
 
@@ -90,6 +95,18 @@ Skill 索引行：
 2. 可同时参考全局已安装 Skill（如 `java-backend-troubleshooting`），但**最多共 2 个**高相关 Skill
 3. 无匹配且可重复 → 记下缺口，收尾时考虑在项目 `skill/` 新建
 4. 无 `AGENTS.md` / `skill/` 时，提示用户先建立项目 Skill 结构（可读项目 `AGENTS.md` 或请用户说明入口）
+
+---
+
+### Final 前检查点
+
+在发送最终回复前，快速判断本轮是否产生了可复用经验：
+
+1. 是否完成了 bug 修复、代码改动、测试 / 部署流程、排错结论、项目初始化或用户纠正？
+2. 是否有下一次可复用的命令、判断顺序、踩坑根因、配置约定或工作流？
+3. 若答案为是，按「保存话术」询问用户是否沉淀；若只是一次性事实、敏感信息或未验证猜测，则不询问。
+
+这一步用于普通对话收尾，不要求用户先说“沉淀”或“保存 skill”。
 
 ---
 

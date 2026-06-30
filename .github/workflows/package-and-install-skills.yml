@@ -49,6 +49,29 @@ jobs:
           fi
           echo "Verified ${count} skill(s)"
 
+      - name: Verify docs mention every skill
+        shell: bash
+        run: |
+          set -euo pipefail
+          docs=(AGENTS.md README.md README.en.md UPGRADE.md)
+          for dir in skill/*/; do
+            name=$(basename "$dir")
+            for doc in "${docs[@]}"; do
+              if ! grep -Fq "$name" "$doc"; then
+                echo "Missing skill mention: ${name} in ${doc}"
+                exit 1
+              fi
+            done
+          done
+          echo "All docs mention every skill"
+
+      - name: Validate install scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n install.sh
+          pwsh -NoProfile -Command '$errors = $null; $tokens = $null; [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path "install.ps1"), [ref]$tokens, [ref]$errors) | Out-Null; if ($errors.Count -gt 0) { $errors | Format-List; exit 1 }'
+
       - name: Build Windows bundle
         shell: bash
         run: |
@@ -59,16 +82,16 @@ jobs:
           (cd dist/windows && zip -r ../ai-skill-repository-skills-windows.zip .)
           unzip -l dist/ai-skill-repository-skills-windows.zip
 
-      - name: Build macOS bundle
+      - name: Build Unix bundle
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p dist/macos
-          cp -R skill dist/macos/
-          cp install.sh dist/macos/
-          chmod +x dist/macos/install.sh
-          (cd dist/macos && zip -r ../ai-skill-repository-skills-macos.zip .)
-          unzip -l dist/ai-skill-repository-skills-macos.zip
+          mkdir -p dist/unix
+          cp -R skill dist/unix/
+          cp install.sh dist/unix/
+          chmod +x dist/unix/install.sh
+          (cd dist/unix && zip -r ../ai-skill-repository-skills-unix.zip .)
+          unzip -l dist/ai-skill-repository-skills-unix.zip
 
       - name: Upload Windows bundle
         uses: actions/upload-artifact@v4
@@ -77,11 +100,11 @@ jobs:
           path: dist/ai-skill-repository-skills-windows.zip
           if-no-files-found: error
 
-      - name: Upload macOS bundle
+      - name: Upload Unix bundle
         uses: actions/upload-artifact@v4
         with:
-          name: macos-bundle
-          path: dist/ai-skill-repository-skills-macos.zip
+          name: unix-bundle
+          path: dist/ai-skill-repository-skills-unix.zip
           if-no-files-found: error
 
   install-windows:
@@ -140,17 +163,61 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download macOS bundle
+      - name: Download Unix bundle
         uses: actions/download-artifact@v4
         with:
-          name: macos-bundle
+          name: unix-bundle
           path: dist
 
       - name: Extract bundle
         shell: bash
         run: |
           set -euo pipefail
-          unzip -q dist/ai-skill-repository-skills-macos.zip -d bundle
+          unzip -q dist/ai-skill-repository-skills-unix.zip -d bundle
+          ls -la bundle/
+
+      - name: Install skills
+        shell: bash
+        working-directory: bundle
+        run: |
+          set -euo pipefail
+          bash ./install.sh
+
+      - name: Verify installation
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOOL_DIRS=("$HOME/.cursor/skills" "$HOME/.claude/skills")
+          for dir in skill/*/; do
+            name=$(basename "$dir")
+            for tool in "${TOOL_DIRS[@]}"; do
+              if [ ! -f "${tool}/${name}/SKILL.md" ]; then
+                echo "Missing: ${tool}/${name}/SKILL.md"
+                exit 1
+              fi
+            done
+            echo "verified: ${name}"
+          done
+
+  install-linux:
+    name: Install on Linux
+    needs: package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Unix bundle
+        uses: actions/download-artifact@v4
+        with:
+          name: unix-bundle
+          path: dist
+
+      - name: Extract bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -q dist/ai-skill-repository-skills-unix.zip -d bundle
           ls -la bundle/
 
       - name: Install skills
@@ -178,7 +245,7 @@ jobs:
 
   publish-release:
     name: Publish Release Artifacts
-    needs: [package, install-windows, install-macos]
+    needs: [package, install-windows, install-macos, install-linux]
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
     permissions:
@@ -190,15 +257,15 @@ jobs:
           name: windows-bundle
           path: dist-windows
 
-      - name: Download macOS bundle
+      - name: Download Unix bundle
         uses: actions/download-artifact@v4
         with:
-          name: macos-bundle
-          path: dist-macos
+          name: unix-bundle
+          path: dist-unix
 
       - name: Upload artifacts to Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
             dist-windows/ai-skill-repository-skills-windows.zip
-            dist-macos/ai-skill-repository-skills-macos.zip
+            dist-unix/ai-skill-repository-skills-unix.zip

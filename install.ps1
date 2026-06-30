@@ -12,9 +12,16 @@ if (-not (Test-Path $sourceSkillDir)) {
     throw "Skill directory not found: $sourceSkillDir (run this script from the bundle or repo root)"
 }
 
-$skillDirs = Get-ChildItem -Path $sourceSkillDir -Directory
+$skillDirs = @(Get-ChildItem -Path $sourceSkillDir -Directory | Sort-Object Name)
 if ($skillDirs.Count -eq 0) {
     throw "No skills found under $sourceSkillDir"
+}
+
+foreach ($skill in $skillDirs) {
+    $skillFile = Join-Path $skill.FullName "SKILL.md"
+    if (-not (Test-Path $skillFile)) {
+        throw "Missing SKILL.md: $($skill.FullName)"
+    }
 }
 
 $homeDir = [Environment]::GetFolderPath("UserProfile")

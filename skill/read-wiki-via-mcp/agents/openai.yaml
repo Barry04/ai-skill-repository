@@ -1,0 +1,3 @@
+display_name: Manage Wiki via MCP
+short_description: Read and write Confluence via MCP.
+default_prompt: Use read-wiki-via-mcp to verify the local Atlassian MCP service, read or write Confluence wiki content, preview mutating changes when needed, and report the resulting page metadata or MCP error.

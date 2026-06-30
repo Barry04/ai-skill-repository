@@ -49,6 +49,12 @@ SSH upload, remote commands, log collection; includes `tools/` scripts.
 
 → [skill/linux-test-executor/SKILL.md](skill/linux-test-executor/SKILL.md)
 
+### read-wiki-via-mcp — read / update wiki
+
+Read, create, and update Confluence / wiki pages through the local Atlassian MCP service.
+
+→ [skill/read-wiki-via-mcp/SKILL.md](skill/read-wiki-via-mcp/SKILL.md)
+
 ### skillopt-adapter — SkillOpt optimization loop
 
 Use for SkillOpt-driven skill optimization, benchmark, regression, validation
@@ -76,7 +82,7 @@ Scripts default to `skill/` next to themselves — no path argument needed after
 
 ### CI: package & install
 
-Workflow [.github/workflows/package-and-install-skills.yml](.github/workflows/package-and-install-skills.yml) builds separate Windows (`skill/` + `install.ps1`) and macOS (`skill/` + `install.sh`) zips. Download the platform **Artifact**, extract, run the install script from that folder.
+Workflow [.github/workflows/package-and-install-skills.yml](.github/workflows/package-and-install-skills.yml) builds separate Windows (`skill/` + `install.ps1`) and Unix (`skill/` + `install.sh`) zips, then verifies installation on Windows, macOS, and Linux. Download the platform **Artifact**, extract, run the install script from that folder.
 
 Workflow [.github/workflows/skill-regression.yml](.github/workflows/skill-regression.yml) runs deterministic skill regression checks for eval-backed skills. CI does not call model optimization.
 

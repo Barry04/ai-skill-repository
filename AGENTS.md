@@ -19,6 +19,7 @@
 | Skill | 路径 | 何时用 |
 |-------|------|--------|
 | evolving-skill | `skill/evolving-skill/SKILL.md` | **任务收尾必读**；沉淀/合并 skill；用户确认后写项目 `skill/` |
+| read-wiki-via-mcp | `skill/read-wiki-via-mcp/SKILL.md` | 通过本地 Atlassian MCP 读取、创建、更新 Confluence / wiki 页面 |
 | java-backend-troubleshooting | `skill/java-backend-troubleshooting/SKILL.md` | Java / Spring / MyBatis 排错 |
 | linux-test-executor | `skill/linux-test-executor/SKILL.md` | 远程 Linux 测试、SSH 部署验证 |
 | project-to-harness-skill | `skill/project-to-harness-skill/SKILL.md` | 任意项目 → Harness 文档 + `skills/`（资格化、登记、preview-first） |

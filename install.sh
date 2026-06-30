@@ -17,6 +17,13 @@ if [ ${#SKILL_DIRS[@]} -eq 0 ]; then
   exit 1
 fi
 
+for SKILL_DIR in "${SKILL_DIRS[@]}"; do
+  if [ ! -f "$SKILL_DIR/SKILL.md" ]; then
+    echo "Error: Missing SKILL.md: $SKILL_DIR" >&2
+    exit 1
+  fi
+done
+
 TOOL_DIRS=(
   "$HOME/.claude/skills"
   "$HOME/.cursor/skills"

@@ -67,6 +67,16 @@
 
 ---
 
+### read-wiki-via-mcp — 读取 / 更新 Wiki
+
+**何时用：** 通过本地 Atlassian MCP 读取、创建、更新 Confluence / wiki 页面。
+
+支持 `wiki.shterm.com` / Confluence 页面读取与写入流程，包含本地 MCP 使用约束和辅助脚本。
+
+→ [skill/read-wiki-via-mcp/SKILL.md](skill/read-wiki-via-mcp/SKILL.md)
+
+---
+
 ### skillopt-adapter — SkillOpt 优化闭环
 
 **何时用：** 用 SkillOpt 做 skill 优化、benchmark、regression、validation gate 或审查 `best_skill.md` 候选结果时。
@@ -85,7 +95,8 @@ SkillOpt 输出必须先进 `experiments/skillopt/` 和 `proposals/`；正式 `s
   ├─ project-to-harness-skill  → 项目 Harness 化
   ├─ skillopt-adapter          → SkillOpt 优化 proposal / regression
   ├─ java-backend-troubleshooting
-  └─ linux-test-executor
+  ├─ linux-test-executor
+  └─ read-wiki-via-mcp
 
 目标项目（随项目 Git）
   ├─ docs/harness/ + skills/   → project-to-harness-skill 批量生成（可选）
@@ -121,16 +132,16 @@ cd ai-skill-repository
 
 推送 `skill/` 或安装脚本变更到 `master` 时，[package-and-install-skills](.github/workflows/package-and-install-skills.yml) 流水线会：
 
-1. **分别打包** — Windows 包：`skill/` + `install.ps1`；macOS 包：`skill/` + `install.sh`（无 `scripts/` 目录）
+1. **分别打包** — Windows 包：`skill/` + `install.ps1`；Unix 包：`skill/` + `install.sh`（无 `scripts/` 目录）
 2. **Windows** — 解压后执行 `.\install.ps1`，安装到 `%USERPROFILE%\.cursor\skills` 与 `%USERPROFILE%\.claude\skills`
-3. **macOS** — 解压后执行 `bash install.sh`，安装到 `~/.cursor/skills` 与 `~/.claude/skills`
+3. **macOS / Linux** — 解压后执行 `bash install.sh`，安装到 `~/.cursor/skills` 与 `~/.claude/skills`
 
 在 GitHub **Actions** 页下载对应平台 Artifact，解压后在包根目录执行：
 
 | 平台 | 命令 |
 |------|------|
 | Windows | `.\install.ps1` |
-| macOS | `bash install.sh` |
+| macOS / Linux | `bash install.sh` |
 
 也可在 Actions 页手动 **Run workflow** 触发。
 
@@ -152,6 +163,7 @@ skill/
   project-to-harness-skill/
   java-backend-troubleshooting/
   linux-test-executor/         # 含 references/、tools/、assets/
+  read-wiki-via-mcp/           # 含 scripts/、agents/
 eval/                          # Skill regression 用例
 scripts/skillopt/              # 评分、proposal 生成与审查脚本
 proposals/                     # SkillOpt 候选修改
