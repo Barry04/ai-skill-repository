@@ -51,6 +51,14 @@ Build an evidence-backed project/module responsibility map, align branch names b
 
 → [skill/cross-project-requirement/SKILL.md](skill/cross-project-requirement/SKILL.md)
 
+### change-lifecycle — feature records and compatibility boundaries
+
+Automatically associate or bootstrap a minimal change record during authorized implementation, including handwritten work. Continue the same record through self-test fixes, keep progress separate from release/dependency facts, and justify compatibility with real consumers or retained data. Unknown release status stays unknown.
+
+→ [skill/change-lifecycle/SKILL.md](skill/change-lifecycle/SKILL.md)
+
+For consistent project routing, merge the supplied [AGENTS.md snippet](skill/change-lifecycle/assets/agents-rule.md) only into an authorized project entrypoint. Installing the skill does not modify global rules or guarantee implicit invocation. [Behavioral acceptance scenarios](eval/change-lifecycle/scenarios.md) are repository-only evaluation material.
+
 ### java-backend-troubleshooting — Java backend debugging
 
 Spring transaction rollback, MyBatis pagination, and related Java service issues.

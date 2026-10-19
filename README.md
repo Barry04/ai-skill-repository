@@ -66,11 +66,23 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 | 项目理解 | [`project-to-harness-skill`](skill/project-to-harness-skill/SKILL.md) | 扫描新项目、遗留项目或开源项目，先预览，再生成 `AGENTS.md`、Harness 文档和合格的项目级 Skill |
 | 多项目定位 | [`workspace-context-router`](skill/workspace-context-router/SKILL.md) | 用可人工审查的 `workspace.yaml` 把请求路由到正确仓库、模块和上下文入口 |
 | 跨仓需求 | [`cross-project-requirement`](skill/cross-project-requirement/SKILL.md) | 建立带代码证据的职责地图与影响矩阵，确认同名分支，按契约兼容性编排实施和验证 |
+| 需求跟踪 | [`change-lifecycle`](skill/change-lifecycle/SKILL.md) | 自动关联或补建需求记录，跨会话继续自测修复，依据真实调用方、数据与发布事实判断兼容 |
 | Java 排错 | [`java-backend-troubleshooting`](skill/java-backend-troubleshooting/SKILL.md) | 定位 Spring 事务不回滚、MyBatis 分页失效和常见 Java 后端问题 |
 | Linux 验证 | [`linux-test-executor`](skill/linux-test-executor/SKILL.md) | 通过 SSH 上传、执行测试、采集日志，并限制远程操作范围 |
 | Wiki 协作 | [`read-wiki-via-mcp`](skill/read-wiki-via-mcp/SKILL.md) | 通过本地 Atlassian MCP 读取、创建和更新 Confluence / Wiki 页面 |
 | 经验沉淀 | [`evolving-skill`](skill/evolving-skill/SKILL.md) | 识别可复用经验，先征得用户同意，再写入当前项目的 `skill/` 和索引 |
 | 质量治理 | [`skillopt-adapter`](skill/skillopt-adapter/SKILL.md) | 对 Skill 做 benchmark、regression 和候选提案审查，避免优化结果直接覆盖正式版本 |
+
+## 让需求记录跟着开发走
+
+`change-lifecycle` 适用于 AI 开发和接手手写代码。无需先写需求文档，Agent 会在获准实施时自动关联或补建最小记录，修复时继续维护同一份。
+
+```text
+请使用 change-lifecycle 设计并实现订单分类功能。
+自测发现问题时继续更新同一份需求记录；发布信息不清楚的地方保留未知。
+```
+
+需要项目中持续触发时，将 [入口规则片段](skill/change-lifecycle/assets/agents-rule.md) 合并到获准修改的 `AGENTS.md`。安装 Skill 本身不修改项目/全局规则，也不保证每次隐式触发。最小记录和证据写法随 Skill 一起安装；[行为验收场景](eval/change-lifecycle/scenarios.md)只保存在仓库中。
 
 ## 一条完整的工程链路
 
@@ -93,6 +105,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 
 - [安装流水线](.github/workflows/package-and-install-skills.yml) 会打包 Windows / Unix 版本，并在 Windows、macOS、Linux 上验证 Codex、Cursor、Claude 三个安装目标。
 - [确定性回归](.github/workflows/skill-regression.yml) 当前覆盖 `java-backend-troubleshooting` 和 `workspace-context-router`；没有评测的 Skill 会在 CI 中明确告警。
+- `change-lifecycle` 使用独立行为样本和隔离文件演练验证；场景保存在 `eval/change-lifecycle/`，尚未接入 CI 自动行为评分。
 - CI 不调用模型或外部付费优化服务。`skillopt-adapter` 管理评测与提案流程，不宣称一键自动优化。
 - Skill 以普通文件保存，可通过 Git 审查、回滚和发布，不依赖私有数据库。
 
@@ -109,7 +122,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 ```text
 AGENTS.md                    # Agent 入口与 Skill 路由地图
 skill/<name>/SKILL.md        # 正式、可安装的 Skill
-eval/<skill>/                # 确定性回归用例与评分标准
+eval/<skill>/                # 回归用例、行为场景与评分标准
 experiments/skillopt/        # 本地优化实验产物，不安装
 proposals/<skill>/           # 待人工审查的候选修改
 scripts/skillopt/            # 评分与 proposal 工具
