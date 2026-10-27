@@ -59,6 +59,14 @@ Automatically associate or bootstrap a minimal change record during authorized i
 
 For consistent project routing, merge the supplied [AGENTS.md snippet](skill/change-lifecycle/assets/agents-rule.md) only into an authorized project entrypoint. Installing the skill does not modify global rules or guarantee implicit invocation. [Behavioral acceptance scenarios](eval/change-lifecycle/scenarios.md) are repository-only evaluation material.
 
+### visual-story-writing — continuous visual technical articles
+
+Use for PPT-inspired technical writing, visual storytelling, scrollytelling and colorful animated diagrams. Preserve source facts, examples, code and references while adapting to the existing blog. Includes semantic colors, responsive diagrams, pause controls, reduced motion and static fallbacks.
+
+→ [skill/visual-story-writing/SKILL.md](skill/visual-story-writing/SKILL.md)
+
+Behavioral scenarios live in `eval/visual-story-writing/`; automated CI behavior scoring is not claimed.
+
 ### java-backend-troubleshooting — Java backend debugging
 
 Spring transaction rollback, MyBatis pagination, and related Java service issues.

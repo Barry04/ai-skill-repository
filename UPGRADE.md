@@ -102,6 +102,7 @@ SkillOpt 是离线优化 / 评测层，不是正式记录系统。正式 Skill �
 | read-wiki-via-mcp | 通过本地 Atlassian MCP 读取、创建、更新 Confluence / wiki 页面 |
 | workspace-context-router | 通过可审查的 `workspace.yaml` 将多项目/多模块请求路由到项目、模块和上下文入口 |
 | skillopt-adapter | SkillOpt 优化、benchmark、regression、proposal 审查；正式 Skill 仍需用户确认后合并 |
+| visual-story-writing | 连续图解式技术文章与 PPT 式写作；配套语义配色、动态流线、手机重排和现有博客适配 |
 
 `project-to-harness-skill` 负责 Harness 化、AGENTS.md、Skill 索引和项目级 Skill 生成。
 

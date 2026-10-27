@@ -27,6 +27,7 @@
 | cross-project-requirement | `skill/cross-project-requirement/SKILL.md` | 多项目职责地图、同名分支提醒、跨仓实施与验证 |
 | change-lifecycle | `skill/change-lifecycle/SKILL.md` | 自动关联需求记录；设计/实现、自测修复、发布事实与兼容边界 |
 | skillopt-adapter | `skill/skillopt-adapter/SKILL.md` | SkillOpt 优化 / benchmark / regression / proposal 审查 |
+| visual-story-writing | `skill/visual-story-writing/SKILL.md` | 连续图解式技术文章、PPT 式写作、彩色动态图解与滚动叙事 |
 
 ## 文件布局
 

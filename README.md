@@ -72,6 +72,12 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 | Wiki 协作 | [`read-wiki-via-mcp`](skill/read-wiki-via-mcp/SKILL.md) | 通过本地 Atlassian MCP 读取、创建和更新 Confluence / Wiki 页面 |
 | 经验沉淀 | [`evolving-skill`](skill/evolving-skill/SKILL.md) | 识别可复用经验，先征得用户同意，再写入当前项目的 `skill/` 和索引 |
 | 质量治理 | [`skillopt-adapter`](skill/skillopt-adapter/SKILL.md) | 对 Skill 做 benchmark、regression 和候选提案审查，避免优化结果直接覆盖正式版本 |
+| 图解写作 | [`visual-story-writing`](skill/visual-story-writing/SKILL.md) | 用观点、图解和案例组织连续阅读的技术文章，支持语义配色、动态流线与现有博客适配 |
+
+```text
+请使用 visual-story-writing，把这篇技术文章改成连续图解式文章。
+保留代码和引用，配色稍丰富，流程可以动；沿用现有博客，手机上也要顺畅阅读。
+```
 
 ## 让需求记录跟着开发走
 
@@ -106,6 +112,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 - [安装流水线](.github/workflows/package-and-install-skills.yml) 会打包 Windows / Unix 版本，并在 Windows、macOS、Linux 上验证 Codex、Cursor、Claude 三个安装目标。
 - [确定性回归](.github/workflows/skill-regression.yml) 当前覆盖 `java-backend-troubleshooting` 和 `workspace-context-router`；没有评测的 Skill 会在 CI 中明确告警。
 - `change-lifecycle` 使用独立行为样本和隔离文件演练验证；场景保存在 `eval/change-lifecycle/`，尚未接入 CI 自动行为评分。
+- `visual-story-writing` 的行为样本保存在 `eval/visual-story-writing/`；写作质量由独立试用检查，尚未接入 CI 自动评分。
 - CI 不调用模型或外部付费优化服务。`skillopt-adapter` 管理评测与提案流程，不宣称一键自动优化。
 - Skill 以普通文件保存，可通过 Git 审查、回滚和发布，不依赖私有数据库。
 
